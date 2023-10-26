@@ -15,6 +15,18 @@ export class App extends React.Component {
     ],
     filter: '',
   };
+  componentDidMount() {
+    const sringifiedContacts = localStorage.getItem('contacts');
+    const parsedContacts =
+      JSON.parse(sringifiedContacts) ?? this.state.contacts;
+    this.setState({ contacts: parsedContacts });
+  }
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      const stringifyContacts = JSON.stringify(this.state.contacts);
+      localStorage.setItem('contacts', stringifyContacts);
+    }
+  }
 
   onAddContactForm = userData => {
     const isExist = this.state.contacts.some(
