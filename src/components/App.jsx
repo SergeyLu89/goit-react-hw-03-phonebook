@@ -17,14 +17,13 @@ export class App extends React.Component {
   };
   componentDidMount() {
     const sringifiedContacts = localStorage.getItem('contacts');
-    const parsedContacts =
-      JSON.parse(sringifiedContacts) ?? this.state.contacts;
-    this.setState({ contacts: parsedContacts });
+    if (sringifiedContacts) {
+      this.setState({ contacts: JSON.parse(sringifiedContacts) });
+    }
   }
   componentDidUpdate(_, prevState) {
     if (prevState.contacts !== this.state.contacts) {
-      const stringifyContacts = JSON.stringify(this.state.contacts);
-      localStorage.setItem('contacts', stringifyContacts);
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     }
   }
 
